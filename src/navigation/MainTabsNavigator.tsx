@@ -1,10 +1,13 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
+
 import HomeStackNavigator from "./HomeStackNavigator";
 import AccountScreen from "../screens/AccountScreen";
+import AgendaScreen from "../screens/AgendaScreen";
 
 export type MainTabParamList = {
   Home: undefined;
+  Agenda: undefined;
   Account: undefined;
 };
 
@@ -19,6 +22,8 @@ export default function MainTabsNavigator() {
 
           if (route.name === "Home") {
             iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "Agenda") {
+            iconName = focused ? "calendar" : "calendar-outline";
           } else if (route.name === "Account") {
             iconName = focused ? "person" : "person-outline";
           } else {
@@ -27,13 +32,17 @@ export default function MainTabsNavigator() {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarShowLabel: false, // 🔥 Oculta el texto
+        tabBarShowLabel: false,
       })}
     >
       <Tab.Screen
         name="Home"
         component={HomeStackNavigator}
         options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Agenda"
+        component={AgendaScreen}
       />
       <Tab.Screen
         name="Account"

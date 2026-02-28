@@ -1,8 +1,19 @@
 import { createContext, useState, ReactNode } from "react";
 
+type Role = "cliente" | "negocio";
+
+type User = {
+  username: string;
+  password: string;
+  role: Role;
+  businessName?: string;
+  description?: string;
+};
+
 type AuthContextType = {
-  isLoggedIn: boolean;
+  user: User | null;
   login: (username: string, password: string) => void;
+  register: (username: string, password: string, role: Role) => void;
   logout: () => void;
 };
 
@@ -11,28 +22,33 @@ export const AuthContext = createContext<AuthContextType>(
 );
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
 
   const login = (username: string, password: string) => {
-    // Usuario quemado
-    const mockUser = {
-      username: "Admin",
-      password: "1234",
-    };
+    const foundUser = users.find(
+      (u) => u.username === username && u.password === password
+    );
 
-    if (username === mockUser.username && password === mockUser.password) {
-      setIsLoggedIn(true);
+    if (foundUser) {
+      setUser(foundUser);
     } else {
-      alert("Credenciales incorrectas");
+      alert("Usuario y/o Contraseña incorrectos");
     }
   };
 
+  const register = (username: string, password: string, role: Role) => {
+    const newUser = { username, password, role };
+    setUsers([...users, newUser]);
+    setUser(newUser);
+  };
+
   const logout = () => {
-    setIsLoggedIn(false);
+    setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ user, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

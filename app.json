@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "base-clean-app",
-    "slug": "base-clean-app",
+    "name": "APP-AGENDACITAS",
+    "slug": "app-agendacitas",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

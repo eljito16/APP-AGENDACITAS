@@ -5,11 +5,11 @@ import AuthNavigator from "./AuthNavigator";
 import MainTabsNavigator from "./MainTabsNavigator";
 
 export default function AppNavigator() {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
     <NavigationContainer>
-      {isLoggedIn ? <MainTabsNavigator /> : <AuthNavigator />}
+      {user ? <MainTabsNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 }
